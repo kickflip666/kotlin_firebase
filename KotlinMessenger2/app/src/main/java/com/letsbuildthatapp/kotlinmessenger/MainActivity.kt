@@ -3,6 +3,7 @@ package com.letsbuildthatapp.kotlinmessenger
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,19 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("MainActivity", "Email is: " + email)
             Log.d("MainActivity", "Password: $password")
+            Log.d("MainActivity","Username: " + username)
 
+            //Firebase authentication to create user with email and password
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
+
+                .addOnCompleteListener{
+
+                   if (!it.isSuccessful) return@addOnCompleteListener
+
+                    //eles if successful
+
+                    Log.d("Main","Successfully created user with uid: ${it.result?.user?.uid}")
+                }
 
         }
 
