@@ -135,12 +135,18 @@ val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("RegisterActivity", "Finally we saved the user to Firebase Database")
+                val intent = Intent (this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
             .addOnFailureListener {
                 Log.d("RegisterActivity", "Failed to write data: ${it.message}")
+
 
             }
     }
 }
 
-class User(val uid: String, val usename: String, val profileImageURL: String)
+class User(val uid: String, val usename: String, val profileImageURL: String){
+    constructor() : this("","","")
+}
