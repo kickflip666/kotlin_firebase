@@ -1,8 +1,7 @@
-package com.letsbuildthatapp.kotlinmessenger
+package com.letsbuildthatapp.kotlinmessenger.registration
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +11,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.letsbuildthatapp.kotlinmessenger.messages.LatestMessagesActivity
+import com.letsbuildthatapp.kotlinmessenger.R
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
@@ -131,7 +132,11 @@ val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
        val uid = FirebaseAuth.getInstance().uid ?: ""
       val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid,username_edittext_register.text.toString(), profileImageURL)
+        val user = User(
+            uid,
+            username_edittext_register.text.toString(),
+            profileImageURL
+        )
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("RegisterActivity", "Finally we saved the user to Firebase Database")

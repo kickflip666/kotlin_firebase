@@ -1,18 +1,21 @@
-package com.letsbuildthatapp.kotlinmessenger
+package com.letsbuildthatapp.kotlinmessenger.messages
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.letsbuildthatapp.kotlinmessenger.R
+import com.letsbuildthatapp.kotlinmessenger.registration.User
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_new_message.*
+import kotlinx.android.synthetic.main.user_row_new_message.view.*
 
 class NewMessageActivity : AppCompatActivity() {
 
@@ -23,15 +26,16 @@ class NewMessageActivity : AppCompatActivity() {
 
         supportActionBar?.title = "Select user"
 
-        val adapter = GroupAdapter<ViewHolder>()
+ //       val adapter = GroupAdapter<ViewHolder>()
+//
+  //      adapter.add(UserItem())
+    //    adapter.add(UserItem())
+      //  adapter.add(UserItem())
 
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-        adapter.add(UserItem())
-
-        recycleview_newmessage.adapter = adapter
+     //   recycleview_newmessage.adapter = adapter
 
         fetchUsers()
+
 
     }
 
@@ -51,6 +55,14 @@ class NewMessageActivity : AppCompatActivity() {
 
                 }
 
+                adapter.setOnItemClickListener{ item, view ->
+
+                    val intent = Intent(view.context,ChatLogActivity::class.java)
+
+                    startActivity(intent)
+                }
+
+
                 recycleview_newmessage.adapter = adapter
             }
 
@@ -64,7 +76,10 @@ class NewMessageActivity : AppCompatActivity() {
 class UserItem(val user: User): Item<ViewHolder>(){
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        //will be called in our list for each user object later on....
+    viewHolder.itemView.username_textview_new_message.text = user.usename
+
+        Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.imageview_new_message)
+
     }
     override fun getLayout(): Int {
         return R.layout.user_row_new_message
