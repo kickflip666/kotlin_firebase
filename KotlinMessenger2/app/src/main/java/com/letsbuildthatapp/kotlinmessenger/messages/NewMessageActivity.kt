@@ -3,6 +3,7 @@ package com.letsbuildthatapp.kotlinmessenger.messages
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,7 +37,10 @@ class NewMessageActivity : AppCompatActivity() {
 
         fetchUsers()
 
+    }
 
+    companion object{
+        val USER_KEY = "USER_KEY"
     }
 
     private fun fetchUsers(){
@@ -57,9 +61,15 @@ class NewMessageActivity : AppCompatActivity() {
 
                 adapter.setOnItemClickListener{ item, view ->
 
-                    val intent = Intent(view.context,ChatLogActivity::class.java)
+                    val userItem = item as UserItem
+
+
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    intent.putExtra(USER_KEY, userItem.user)
 
                     startActivity(intent)
+
+                    finish()
                 }
 
 
@@ -77,6 +87,7 @@ class UserItem(val user: User): Item<ViewHolder>(){
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
     viewHolder.itemView.username_textview_new_message.text = user.usename
+
 
         Picasso.get().load(user.profileImageURL).into(viewHolder.itemView.imageview_new_message)
 
