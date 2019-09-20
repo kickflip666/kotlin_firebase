@@ -9,12 +9,12 @@
     android:layout_marginBottom="12dp">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textview_from_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:background="@drawable/rounded_edittext_register_login"
 
+        android:background="@drawable/rounded_edittext_register_login"
         android:maxWidth="240dp"
         android:padding="16dp"
         android:text="This is my message that will wrap into multiply lines and keep on going"
